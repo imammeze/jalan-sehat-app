@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ asset('images/logo-sobat.png') }}" type="image/x-icon">
     <title>Daftar Jalan Sehat</title>
     @vite('resources/css/app.css')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl">
@@ -21,18 +23,27 @@
             <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Nomor WhatsApp</label>
                 <input type="number" name="phone" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="08123456789" required>
-
-                @error('phone')
-                    <p class="text-amber-500 text-xs italic mt-1">{{ $message }}</p>
-                @enderror
             </div>
             
             <button type="submit" class="w-full bg-amber-600 text-white font-bold py-2 px-4 rounded hover:bg-amber-700 transition">
                 Daftar & Cetak Tiket
             </button>
 
-            <p class="text-center mt-4 font-semibold">Powerded by <a class="text-red-500" href="https://sobatberbagi.com">Sobatberbagi.com</a></p>
+            <p class="text-center mt-4 font-semibold">Powered by <a class="text-red-500" href="https://sobatberbagi.com">Sobatberbagi.com</a></p>
         </form>
     </div>
+
+     @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Mendaftar',
+                text: '{{ $errors->first() }}',
+                confirmButtonText: 'Coba Lagi',
+                confirmButtonColor: '#d33', 
+                timer: 5000 
+            });
+        </script>
+    @endif
 </body>
 </html>

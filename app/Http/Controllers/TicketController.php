@@ -19,6 +19,8 @@ class TicketController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|numeric|unique:participants,phone',
+        ],[
+            'phone.unique' => 'Nomor WhatsApp ini sudah pernah didaftarkan sebelumnya. Silakan gunakan nomor lain.',
         ]);
 
         $participant = DB::transaction(function () use ($request) {
