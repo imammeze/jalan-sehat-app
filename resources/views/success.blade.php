@@ -42,7 +42,7 @@
             <p class="text-sm text-blue-600 mb-4">Sisihkan sebagian rezeki untuk <strong>Masjid Al Haq</strong>.</p>
             
             <a href="https://sobatberbagi.com/infaq/masjid-al-haq" target="_blank" 
-               class="inline-block w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg transform hover:-translate-y-1">
+               class="inline-block w-max bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg transform hover:-translate-y-1">
                 ❤️ Infaq Sekarang
             </a>
         </div>
