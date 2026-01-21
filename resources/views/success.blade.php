@@ -33,9 +33,19 @@
 
         <p class="text-gray-500 text-sm mb-4">Jika download tidak berjalan otomatis, silakan klik tombol di bawah:</p>
         
-        <a href="{{ route('ticket.download', $participant->phone) }}" class="inline-block bg-green-600 text-white font-bold py-3 px-6 rounded-full hover:bg-green-700 transition shadow-lg">
+        <a href="{{ route('ticket.download', $participant->phone) }}" class="inline-block bg-green-600 text-white font-bold py-3 px-6 rounded-full hover:bg-green-700 transition shadow-lg mb-6">
             Download Tiket Manual
         </a>
+
+        <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+            <h3 class="text-lg font-bold text-blue-800 mb-2">Mari Beramal Jariyah</h3>
+            <p class="text-sm text-blue-600 mb-4">Sisihkan sebagian rezeki untuk <strong>Masjid Al Haq</strong>.</p>
+            
+            <a href="https://sobatberbagi.com/infaq/masjid-al-haq" target="_blank" 
+               class="inline-block w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg transform hover:-translate-y-1">
+                ❤️ Infaq Sekarang
+            </a>
+        </div>
 
         <div class="mt-8 pt-6 border-t border-gray-100">
             <a href="{{ route('home') }}" class="text-gray-400 hover:text-gray-600 text-sm">Kembali ke Halaman Depan</a>

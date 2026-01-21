@@ -16,6 +16,14 @@ class TicketController extends Controller
     
     public function store(Request $request)
     {
+        $maxParticipants = 700;
+
+        $lastSequence = Participant::max('sequence') ?? 0;
+
+        if ($lastSequence >= $maxParticipants) {
+            return back()->withErrors(['quota' => 'Mohon maaf, kuota pendaftaran sudah penuh. Nomor tiket telah mencapai batas maksimal.']);
+        }
+    
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|numeric|unique:participants,phone',
@@ -24,8 +32,8 @@ class TicketController extends Controller
         ]);
 
         $participant = DB::transaction(function () use ($request) {
-            $lastSequence = Participant::lockForUpdate()->max('sequence');
-            $newSequence = $lastSequence ? $lastSequence + 1 : 1;
+            $currentMax = Participant::lockForUpdate()->max('sequence');
+            $newSequence = $currentMax ? $currentMax + 1 : 1;
             $ticketNumber = str_pad($newSequence, 4, '0', STR_PAD_LEFT);
 
             return Participant::create([
