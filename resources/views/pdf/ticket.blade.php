@@ -61,7 +61,7 @@
         }
 
         .logo-img { 
-            width: 90px; 
+            width: 120px; 
             height: auto; 
             display: block; 
             margin: 0 auto;
