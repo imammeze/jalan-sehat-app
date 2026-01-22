@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\ReCaptcha;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -27,7 +28,10 @@ class TicketController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|numeric|unique:participants,phone',
+            'g-recaptcha-response' => new ReCaptcha,
         ],[
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'phone.required' => 'Nomor WhatsApp wajib diisi.',
             'phone.unique' => 'Nomor WhatsApp ini sudah pernah didaftarkan sebelumnya. Silakan gunakan nomor lain.',
         ]);
 

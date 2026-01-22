@@ -7,6 +7,7 @@
     <title>Daftar Jalan Sehat</title>
     @vite('resources/css/app.css')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl">
@@ -17,13 +18,15 @@
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Nama Lengkap</label>
-                <input type="text" name="name" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Contoh: Budi Santoso" required>
+                <input type="text" name="name" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Contoh: Budi Santoso" >
             </div>
             
             <div class="mb-6">
                 <label class="block text-gray-700 text-sm font-bold mb-2">Nomor WhatsApp</label>
-                <input type="number" name="phone" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="08123456789" required>
+                <input type="number" name="phone" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="08123456789" >
             </div>
+
+            <div class="g-recaptcha mb-5" data-sitekey="{{ env('GOOGLE_RECAPTCHA_SITE_KEY') }}"></div>
             
             <button type="submit" class="w-full bg-amber-600 text-white font-bold py-2 px-4 rounded hover:bg-amber-700 transition">
                 Daftar & Cetak Tiket
@@ -45,5 +48,29 @@
             });
         </script>
     @endif
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if (!$errors->any())
+            
+            Swal.fire({
+                title: '⚠️ PERHATIAN',
+                text: 'Jika terindikasi data tidak valid (palsu/spam), maka status kepesertaan akan kami GUGURKAN secara otomatis.',
+                icon: 'warning',
+                confirmButtonText: 'Saya Mengerti & Setuju',
+                confirmButtonColor: '#d33', 
+                allowOutsideClick: false, 
+                allowEscapeKey: false,
+                backdrop: `
+                    rgba(0,0,123,0.4)
+                    left top
+                    no-repeat
+                `
+            });
+
+        @endif
+
+    });
+</script>
 </body>
 </html>
