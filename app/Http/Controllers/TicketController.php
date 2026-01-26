@@ -15,24 +15,29 @@ class TicketController extends Controller
         return view('register');
     }
     
-    public function store(Request $request)
+   public function store(Request $request)
     {
-        $maxParticipants = 700;
+        $existingUser = Participant::where('phone', $request->phone)->first();
 
+        if ($existingUser) {
+            return view('already-registered', ['participant' => $existingUser]);
+        }
+
+        $maxParticipants = 700;
         $lastSequence = Participant::max('sequence') ?? 0;
 
         if ($lastSequence >= $maxParticipants) {
             return back()->withErrors(['quota' => 'Mohon maaf, kuota pendaftaran sudah penuh. Nomor tiket telah mencapai batas maksimal.']);
         }
-    
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'phone' => 'required|numeric|unique:participants,phone',
-            'g-recaptcha-response' => new ReCaptcha,
+            'phone' => 'required|numeric', 
+            'g-recaptcha-response' => ['required', new ReCaptcha],
         ],[
             'name.required' => 'Nama lengkap wajib diisi.',
             'phone.required' => 'Nomor WhatsApp wajib diisi.',
-            'phone.unique' => 'Nomor WhatsApp ini sudah pernah didaftarkan sebelumnya. Silakan gunakan nomor lain.',
+            'g-recaptcha-response.required' => 'Mohon centang kotak "Saya bukan robot".', 
         ]);
 
         $participant = DB::transaction(function () use ($request) {
@@ -43,7 +48,7 @@ class TicketController extends Controller
             return Participant::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'sequence' => $newSequence,    
+                'sequence' => $newSequence,     
                 'ticket_number' => $ticketNumber 
             ]);
         });
